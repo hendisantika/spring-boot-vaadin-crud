@@ -37,4 +37,30 @@ public class MainView extends VerticalLayout {
 
     private final String MAX_WIDTH = "400px";
     private final String BUTTON_WIDTH = "123px";
+
+    public MainView(PersonRepository repo) {
+        this.repo = repo;
+        this.grid = new Grid<>(Person.class, false);
+        grid.addColumn(Person::getId).setHeader("ID").setSortable(true).setWidth("20px");
+        grid.addColumn(Person::getFirstName).setHeader("First name").setSortable(true);
+        grid.addColumn(Person::getLastName).setHeader("Last name").setSortable(true);
+        grid.setMaxWidth(MAX_WIDTH);
+
+        deleteBtn.setEnabled(false);
+
+        newBtn.setWidth(BUTTON_WIDTH);
+        deleteBtn.setWidth(BUTTON_WIDTH);
+        saveBtn.setWidth(BUTTON_WIDTH);
+
+        btnLayout.add(newBtn, deleteBtn, saveBtn);
+        btnLayout.setMaxWidth(MAX_WIDTH);
+        fieldsLayout.add(name, lastName);
+
+        add(btnLayout);
+        add(fieldsLayout);
+        add(grid);
+        refreshTableData();
+        addButtonsActionListeners();
+    }
+
 }

@@ -102,4 +102,10 @@ public class MainView extends VerticalLayout {
     private void refreshTableData() {
         grid.setItems(repo.findAll());
     }
+
+    private void clearInputFields() {
+        name.clear();
+        lastName.clear();
+        idField.clear();
+    }
 }

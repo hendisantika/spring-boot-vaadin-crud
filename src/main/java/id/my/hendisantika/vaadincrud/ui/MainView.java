@@ -63,4 +63,40 @@ public class MainView extends VerticalLayout {
         addButtonsActionListeners();
     }
 
+    private void addButtonsActionListeners() {
+        grid.addSelectionListener(selected -> {
+            if (selected.getAllSelectedItems().isEmpty()) {
+                deleteBtn.setEnabled(false);
+                clearInputFields();
+            } else {
+                deleteBtn.setEnabled(true);
+                Person selectedCustomer = selected.getFirstSelectedItem().get();
+                name.setValue(selectedCustomer.getFirstName());
+                lastName.setValue(selectedCustomer.getLastName());
+                idField.setValue(selectedCustomer.getId());
+            }
+        });
+
+        newBtn.addClickListener(click -> {
+            clearInputFields();
+            grid.select(null);
+        });
+
+        deleteBtn.addClickListener(click -> {
+            repo.delete(grid.getSelectedItems().stream().toList().get(0));
+            refreshTableData();
+            clearInputFields();
+        });
+
+        saveBtn.addClickListener(click -> {
+            Person customer = new Person();
+            customer.setFirstName(name.getValue());
+            customer.setLastName(lastName.getValue());
+            customer.setId(idField.getValue());
+            repo.save(customer);
+            clearInputFields();
+            refreshTableData();
+        });
+    }
+
 }

@@ -99,4 +99,7 @@ public class MainView extends VerticalLayout {
         });
     }
 
+    private void refreshTableData() {
+        grid.setItems(repo.findAll());
+    }
 }
